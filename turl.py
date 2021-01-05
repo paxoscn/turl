@@ -75,8 +75,19 @@ def validateRes(indexPath, namePath, curl, expJson, actJson):
         sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t(Empty)\t" + expJson + "\tBad response\n")
         failed = True
         return
-    exp = json.loads(expJson)
-    act = json.loads(actJson)
+    exp = None
+    try:
+        exp = json.loads(expJson)
+    except Exception as e:
+        sys.stderr.write('Bad expected JSON: ' + expJson)
+        exit(1)
+    act = None
+    try:
+        act = json.loads(actJson)
+    except Exception as e:
+        sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tBad response JSON\n")
+        failed = True
+        return
     errors = validateObj("res", exp, act)
     if len(errors) > 0:
         sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tValidation failed: " + errors + "\n")
@@ -87,7 +98,7 @@ def validateRes(indexPath, namePath, curl, expJson, actJson):
 def validateObj(objPath, exp, act):
     errors = ""
     for k, expV in exp.items():
-        actV = act[k]
+        actV = act.get(k)
         if expV is None:
             if actV is not None:
                 errors += objPath + "." + k + " should be null; "
@@ -156,7 +167,7 @@ def readTurlFile(turlML, file):
     return turlML
 
 def ref(turlML, filePattern):
-    refFileNames = [fileName for fileName in os.listdir(".") if re.match(filePattern.replace("*", ".*"), fileName)]
+    refFileNames = [fileName for fileName in os.listdir(".") if re.match(filePattern.replace("(", "\\(").replace(")", "\\)").replace("*", ".*"), fileName)]
     for refFileName in refFileNames:
         turlML += "\n"
         turlML = readTurlFile(turlML, refFileName)

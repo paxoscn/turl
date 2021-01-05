@@ -68,13 +68,14 @@ for mdFileName in mdFileNames:
                 currentCase = { "req": None, "params": [] }
                 state = "IN_CASE"
         elif state == "AWAITING_REQ":
-            if line.startswith("{"):
+            if line.startswith("{") or line.startswith("["):
                 currentCase["req"] = line
                 state = "IN_REQ"
         elif state == "IN_REQ":
-            currentCase["req"] += line
-            if line.startswith("}"):
+            if line.startswith("`"):
                 state = "IN_CASE"
+            else:
+                currentCase["req"] += line
         elif state == "AWAITING_PARAMS":
             if line.startswith("| -"):
                 state = "IN_PARAMS"
@@ -87,13 +88,14 @@ for mdFileName in mdFileNames:
                 paramParts = line.split("|")
                 currentCase["params"].append({ "name": paramParts[1].replace("&emsp;", ""), "in": paramParts[3], "required": paramParts[4] == "true", "type": paramParts[5] })
         elif state == "AWAITING_RES":
-            if line.startswith("{"):
+            if line.startswith("{") or line.startswith("["):
                 currentCase["res"] = line
                 state = "IN_RES"
         elif state == "IN_RES":
-            currentCase["res"] += line
-            if line.startswith("}"):
+            if line.startswith("`"):
                 state = "IN_CASE"
+            else:
+                currentCase["res"] += line
 
     if currentCase is not None:
         endCase(turlFile, currentCase)
