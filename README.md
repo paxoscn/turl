@@ -86,9 +86,10 @@ curl 'http://test-simba.startdt.net/api/upms/api/v3/workspaces' \
   -H 'Cache-Control: no-cache' \
   -H 'Accept: application/json, text/plain, */*' \
   -H 'Accept-Language: zh-CN' \
-  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36' \
+  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJzaW1iYSIsInN1YiI6IntcImFjY291bnRJZFwiOjEzMjY0ODUxOTA2MDgwMzE3NDQsXCJhY2NvdW50Q29kZVwiOlwic3RhcnRkdFwiLFwibmFtZVwiOlwibW9yaWdlbkBzdGFydGR0XCIsXCJ1c2VyVHlwZVwiOjc3NyxcInVzZXJOYW1lXCI6XCJtb3JpZ2VuXCIsXCJ1c2VySWRcIjoxMDYwOCxcInByaW1hcnlVc2VySWRcIjoxNSxcInJlZnJlc2hUb2tlblwiOlwic2ltYmE6YXV0aDpzZXNzaW9uOjRlZWMwZTJlY2RmMDllM2I5YWRhN2NlOGEyNmU1NDVmXCJ9IiwiaXNzIjoic2ltYmEiLCJpYXQiOjE2MDkxMzkwNTMsImV4cCI6MTYwOTIyNTQ1M30.DIV4pqnbKppXcKC4BPiGNFOQzfKTsSfFiN4FUYD43cI' \
   -H 'Content-Type: application/json;charset=utf-8' \
   -H 'Referer: http://test-simba.startdt.net/workspace/workspaceManage/' \
+  -H 'Cookie: experimentation_subject_id=ImM5YjZlNTQ3LWZiZTgtNGMwYi1iM2JjLTE5ODMzMmRiNDY2NCI%3D--ccd989d7278bf4806438d7efebaf3aa8beb5e763; SERVERID=f6f67ef3d9f8c4b952891272b8286685|1609153077|1609153074' \
   --compressed \
   --insecure \
   -d '{"code":"turl-$random","name":"turl-$random","description":"turl-$random","visitUrl":"http://dev-fe-simba.k8s.startdt.com","apiUrl":"http://dev-soul-server.k8s.startdtapi.com","favicon":"aaa","title":"aaa","logo":"aaa","copyright":"aaa" }'
