@@ -135,6 +135,8 @@ TODO
 ### 3.2 Knife4j
 请将从Knife4j下载的Markdown文件放在任一文件夹下并执行项目中的knife4j.py，生成的testcases.turl即为需要的turl文件.
 
+从Knife4j生成的测试用例往往需要进行一些人工内容替换才能正确执行。
+
 ## 4 版本变更历史
 | 版本 | 日期 | 描述 |
 | --- | --- | --- |
