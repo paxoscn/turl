@@ -1,0 +1,136 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+# python turl.py 'test-simba.startdt.net' -H 'token: ...' -H 'Cookie: ...'
+
+import sys
+import os
+import re
+import json
+
+domain = None
+args = []
+argk = None
+for argv in sys.argv[1:]:
+    if argk is None:
+        if argv.startswith("-"):
+            argk = argv
+        else:
+            domain = argv
+    else:
+        args.append({ "k": argk, "v": argv })
+        argk = None
+
+failed = False
+
+def runModule(module, prefix):
+    modulePath = prefix + module["name"] + "/"
+    runCase(modulePath, module["lines"])
+    for child in module["children"]:
+        runModule(child, modulePath)
+
+def runCase(modulePath, lines):
+    if len(lines) < 1:
+        return
+    print(modulePath)
+    lastCurl = None
+    lastRes = None
+    for line in lines:
+        if line.startswith("curl "):
+            if domain is not None:
+                line = re.sub('([^\-]+://)[^/]+(.+)', "\\1" + domain + "\\2", line)
+            for arg in args:
+                target = arg["k"] + " +[^']+"
+                if arg["v"].find(":") > -1:
+                    target = arg["k"] + " +'" + arg["v"][0:arg["v"].find(":")] + ": [^']+"
+                line = re.sub(target, arg["k"] + " '" + arg["v"], line)
+            lastResLines = os.popen(line).readlines()
+            if len(lastResLines) < 1:
+                sys.stderr.write(modulePath + "\t" + line + "\t(None)\tBad response\n")
+                failed = True
+            else:
+                lastCurl = line
+                lastRes = lastResLines[0]
+        else:
+            validateRes(modulePath, lastCurl, line, lastRes)
+
+def validateRes(modulePath, curl, exp, act):
+    print(exp + " ====================== " + act)
+    sys.stderr.write(modulePath + "\t" + curl + "\t" + act + "\tNot matched " + exp + "\n")
+    failed = True
+
+def build():
+    suiteML = ""
+    refFileNames = [fileName for fileName in os.listdir(".") if re.match(".*.turl", fileName)]
+    for refFileName in refFileNames:
+        suiteML += "\n"
+        refFile = open(refFileName)
+        for line in refFile.readlines():
+            suiteML += line.replace("\\\n", " ")
+        refFile.close()
+
+    state = "IN_MODULE"
+    currentModule = rootModule = { "name": "", "children": [], "lines": [] }
+    runThisOnly = [ rootModule ]
+    for line in suiteML.split("\n"):
+        line = line.strip()
+        if len(line) < 1:
+            continue
+        if state == "IN_MODULE":
+            if line.startswith("curl "):
+                currentModule["lines"].append(line)
+                state = "IN_CASE"
+            else:
+                currentModule = metNewModule(rootModule, runThisOnly, line)
+        elif state == "IN_CASE":
+            if line.startswith("curl ") or line.startswith("{"):
+                currentModule["lines"].append(line)
+            else:
+                currentModule = metNewModule(rootModule, runThisOnly, line)
+                state = "IN_MODULE"
+    rootModule = runThisOnly[0]
+    return rootModule
+
+def metNewModule(rootModule, runThisOnly, line):
+    moduleName = line
+    runThisModuleOnly = False
+    if moduleName.startswith("!!!"):
+        runThisModuleOnly = True
+        moduleName = moduleName[3:].lstrip()
+    modulePathMatcher = re.match(r'^([0-9X\.]+) *(.*)', moduleName)
+    if modulePathMatcher:
+        modulePath = modulePathMatcher.group(1)
+        moduleName = modulePathMatcher.group(2)
+    else:
+        modulePath = "X"
+
+    parentModule = rootModule
+    modulePathParts = modulePath.split(".")
+    partIndex = 0
+    for moduleIndexStr in modulePathParts:
+        moduleIndex = 0
+        if moduleIndexStr == "X":
+            if partIndex < len(modulePathParts) - 1:
+                moduleIndex = len(parentModule["children"]) - 1
+                if moduleIndex < 0:
+                    moduleIndex = 0
+            else:
+                moduleIndex = len(parentModule["children"])
+        else:
+            moduleIndex = int(moduleIndexStr) - 1
+        for emptyModuleIndex in range(len(parentModule["children"]), moduleIndex + 1):
+            parentModule["children"].append({ "name": "", "children": [], "lines": [] })
+        parentModule = parentModule["children"][moduleIndex]
+        partIndex += 1
+    parentModule["name"] = moduleName
+    if runThisModuleOnly:
+        runThisOnly[0] = parentModule
+    return parentModule
+
+rootModule = build()
+runModule(rootModule, "/")
+
+if failed:
+    exit(1)
+else:
+    exit(0)

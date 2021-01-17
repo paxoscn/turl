@@ -1,0 +1,105 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+import sys
+import os
+import re
+import json
+
+domain = None
+args = {}
+argk = None
+for argv in sys.argv[1:]:
+    if argk is None:
+        if argv.startswith("-"):
+            argk = argv
+        else:
+            domain = argv
+    else:
+        args[argk] = argv
+        argk = None
+
+suite = {}
+
+
+def run(suiteML):
+    rootModule = buildSuite(suiteML)
+    runCases
+
+def buildSuite(suiteML):
+    suiteMLAfterRef = ""
+    for line in suiteML.split("\n"):
+        if line.startswith("("):
+            suiteMLAfterRef = ref(suiteMLAfterRef, line[1:-1])
+        else:
+            suiteMLAfterRef += "\n" + line
+
+    state = "IN_MODULE"
+    currentModule = rootModule = { "name": "", "children": [], "cases": [] }
+    runThisOnly = [ rootModule ]
+    currentCase = None
+    for line in suiteMLAfterRef.split("\n"):
+        line = line.strip()
+        if len(line) < 1:
+            continue
+        if state == "IN_MODULE":
+            if line.startswith("curl "):
+                currentCase = { "lines": [ line ] }
+                currentModule["cases"].append(currentCase)
+                state = "IN_CASE"
+            else:
+                currentModule = metNewModule(rootModule, runThisOnly, line)
+        elif state == "IN_CASE":
+            if line.startswith("curl ") or line.startswith("{"):
+                currentCase["lines"].append(line)
+            else:
+                currentModule = metNewModule(rootModule, runThisOnly, line)
+                state = "IN_MODULE"
+    rootModule = runThisOnly[0]
+    return rootModule
+
+def metNewModule(rootModule, runThisOnly, line):
+    moduleName = line
+    runThisModuleOnly = False
+    if moduleName.startswith("!!!"):
+        runThisModuleOnly = True
+        moduleName = moduleName[3:].lstrip()
+    modulePathMatcher = re.match(r'^([0-9X\.]+) *(.*)', moduleName)
+    if modulePathMatcher:
+        modulePath = modulePathMatcher.group(1)
+        moduleName = modulePathMatcher.group(2)
+    else:
+        modulePath = "X"
+
+    parentModule = rootModule
+    modulePathParts = modulePath.split(".")
+    partIndex = 0
+    for moduleIndexStr in modulePathParts:
+        moduleIndex = 0
+        if moduleIndexStr == "X":
+            if partIndex < len(modulePathParts) - 1:
+                moduleIndex = len(parentModule["children"]) - 1
+                if moduleIndex < 0:
+                    moduleIndex = 0
+            else:
+                moduleIndex = len(parentModule["children"])
+        else:
+            moduleIndex = int(moduleIndexStr) - 1
+        for emptyModuleIndex in range(len(parentModule["children"]), moduleIndex + 1):
+            parentModule["children"].append({ "name": "", "children": [], "cases": [] })
+        parentModule = parentModule["children"][moduleIndex]
+        partIndex += 1
+    parentModule["name"] = moduleName
+    if runThisModuleOnly:
+        runThisOnly[0] = parentModule
+    return parentModule
+
+def ref(suiteMLAfterRef, filePattern):
+    refFileNames = [fileName for fileName in os.listdir(".") if re.match(filePattern.replace("*", ".*"), fileName)]
+    for refFileName in refFileNames:
+        suiteMLAfterRef += "\n"
+        refFile = open(refFileName)
+        for line in refFile.readlines():
+            suiteMLAfterRef += line.replace("\\\n", " ")
+        refFile.close()
+    return suiteMLAfterRef

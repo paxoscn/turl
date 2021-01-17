@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+# export TURL_DOMAIN="test-simba.startdt.net"
+# export TURL_ARGS="-H 'token: ...' -H 'Cookie: ...'"
+# python turl.py simba.turl
+
 import sys
 import os
 import re
@@ -31,17 +35,13 @@ vars = {}
 
 failed = False
 
-def runModule(module, index, indexPrefix, namePrefix):
-    indexPath = indexPrefix + str(index + 1) + "."
-    namePath = namePrefix + module["name"] + "/"
-    if module["highlighted"]:
-        runCase(indexPath, namePath, module["lines"])
-    for i, child in enumerate(module["children"]):
-        if module["highlighted"]:
-            child["highlighted"] = True
-        runModule(child, i, indexPath, namePath)
+def runModule(module, prefix):
+    modulePath = prefix + module["name"] + "/"
+    runCase(modulePath, module["lines"])
+    for child in module["children"]:
+        runModule(child, modulePath)
 
-def runCase(indexPath, namePath, lines):
+def runCase(modulePath, lines):
     if len(lines) < 1:
         return
     lastCurl = None
@@ -65,7 +65,7 @@ def runCase(indexPath, namePath, lines):
             else:
                 lastRes = lastResLines[0]
         else:
-            validateRes(indexPath, namePath, lastCurl, line, lastRes)
+            validateRes(modulePath, lastCurl, line, lastRes)
 
 def applyVars(curl):
     curl = curl.replace("$random", str(random.randint(0,9999999999)))
@@ -73,35 +73,24 @@ def applyVars(curl):
         curl = curl.replace(k, v)
     return curl
 
-def validateRes(indexPath, namePath, curl, expJson, actJson):
+def validateRes(modulePath, curl, expJson, actJson):
     if actJson is None:
-        sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t(Empty)\t" + expJson + "\tBad response\n")
+        sys.stderr.write(modulePath + "\t" + curl + "\t(Empty)\t" + expJson + "\tBad response\n")
         failed = True
         return
-    exp = None
-    try:
-        exp = json.loads(expJson)
-    except Exception as e:
-        sys.stderr.write('Bad expected JSON: ' + expJson)
-        exit(1)
-    act = None
-    try:
-        act = json.loads(actJson)
-    except Exception as e:
-        sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tBad response JSON\n")
-        failed = True
-        return
-    errors = validateObj("res", exp, act)
+    exp = json.loads(expJson)
+    act = json.loads(actJson)
+    errors = validateObj("res", exp, act, modulePath, curl, expJson, actJson)
     if len(errors) > 0:
-        sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tValidation failed: " + errors + "\n")
+        sys.stderr.write(modulePath + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tValidation failed: " + errors + "\n")
         failed = True
     else:
-        print indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tOK\n"
+        print modulePath + "\t" + curl + "\t" + actJson + "\t" + expJson + "\tOK\n"
 
-def validateObj(objPath, exp, act):
+def validateObj(objPath, exp, act, modulePath, curl, expJson, actJson):
     errors = ""
     for k, expV in exp.items():
-        actV = act.get(k)
+        actV = act[k]
         if expV is None:
             if actV is not None:
                 errors += objPath + "." + k + " should be null; "
@@ -126,19 +115,20 @@ def validateObj(objPath, exp, act):
                 errors += objPath + "." + k + "'s value " + str(actV) + " is not list; "
             else:
                 for i, item in enumerate(actV):
-                    errors += validateObj(objPath + "." + k + "[" + str(i) + "]", expV[0], item)
+                    errors += validateObj(objPath + "." + k + "[" + str(i) + "]", expV[0], item, modulePath, curl, expJson, actJson)
         else:
             if type(actV) != dict:
                 errors += objPath + "." + k + "'s value " + str(actV) + " is not dict; "
             else:
-                errors += validateObj(objPath + "." + k, expV, actV)
+                errors += validateObj(objPath + "." + k, expV, actV, modulePath, curl, expJson, actJson)
     return errors
 
 def build():
     turlML = readTurlFile("", turlFile)
 
     state = "IN_MODULE"
-    currentModule = rootModule = { "highlighted": True, "name": "", "children": [], "lines": [] }
+    currentModule = rootModule = { "name": "", "children": [], "lines": [] }
+    runThisOnly = [ rootModule ]
     for line in turlML.split("\n"):
         line = line.strip()
         if len(line) < 1:
@@ -148,13 +138,14 @@ def build():
                 currentModule["lines"].append(line)
                 state = "IN_CASE"
             else:
-                currentModule = metNewModule(rootModule, line)
+                currentModule = metNewModule(rootModule, runThisOnly, line)
         elif state == "IN_CASE":
             if line.startswith("curl ") or line.startswith("{"):
                 currentModule["lines"].append(line)
             else:
-                currentModule = metNewModule(rootModule, line)
+                currentModule = metNewModule(rootModule, runThisOnly, line)
                 state = "IN_MODULE"
+    rootModule = runThisOnly[0]
     return rootModule
 
 def readTurlFile(turlML, file):
@@ -168,18 +159,17 @@ def readTurlFile(turlML, file):
     return turlML
 
 def ref(turlML, filePattern):
-    refFileNames = [fileName for fileName in os.listdir(".") if re.match(filePattern.replace("(", "\\(").replace(")", "\\)").replace("*", ".*"), fileName)]
+    refFileNames = [fileName for fileName in os.listdir(".") if re.match(filePattern.replace("*", ".*"), fileName)]
     for refFileName in refFileNames:
         turlML += "\n"
         turlML = readTurlFile(turlML, refFileName)
     return turlML
 
-def metNewModule(rootModule, line):
+def metNewModule(rootModule, runThisOnly, line):
     moduleName = line
-    highlighted = False
+    runThisModuleOnly = False
     if moduleName.startswith("!!!"):
-        highlighted = True
-        rootModule["highlighted"] = False
+        runThisModuleOnly = True
         moduleName = moduleName[3:].lstrip()
     modulePathMatcher = re.match(r'^([0-9X\.]+) *(.*)', moduleName)
     if modulePathMatcher:
@@ -203,15 +193,16 @@ def metNewModule(rootModule, line):
         else:
             moduleIndex = int(moduleIndexStr) - 1
         for emptyModuleIndex in range(len(parentModule["children"]), moduleIndex + 1):
-            parentModule["children"].append({ "highlighted": False, "name": "", "children": [], "lines": [] })
+            parentModule["children"].append({ "name": "", "children": [], "lines": [] })
         parentModule = parentModule["children"][moduleIndex]
         partIndex += 1
     parentModule["name"] = moduleName
-    parentModule["highlighted"] = highlighted
+    if runThisModuleOnly:
+        runThisOnly[0] = parentModule
     return parentModule
 
 rootModule = build()
-runModule(rootModule, 0, "", "")
+runModule(rootModule, "/")
 
 if failed:
     exit(1)

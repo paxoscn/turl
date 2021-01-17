@@ -1,0 +1,815 @@
+X.X 管理中心
+X.X.X 导出
+curl -XGET 'http://default-host/api/v1/managecenter/export?1=1&managerCenterIds=1111111&managerCenterId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 提交记录列表
+curl -XGET 'http://default-host/api/v1/managecenter/{projectId}/list?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X 任务开发
+X.X.X V2.4.12 【修改】添加任务（包括离线任务、实时任务、数据科学任务
+curl -XPOST 'http://default-host/api/v1/jobs?1=1&addJob=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"businessFlag": 0,"description": "","doubleEnvFlag": false,"jobMode": 0,"jobType": 0,"name": "","periodType": 0,"projectId": 0,"scheduleResourceId": 0,"workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","parentId": 0,"periodType": 0,"publish": false,"type": 0}}}
+
+
+X.X.X 批量同步
+curl -XPOST 'http://default-host/api/v1/jobs/batchSync?1=1&batchSyncReq=1111111&dataSourceId=1111111&fieldMappings=1111111&partition=1111111&projectId=1111111&publishFlag=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"cycleType": 0,"dataSourceId": 0,"dayCron": {"hour": "","minute": ""},"fieldMappings": [{"sourceType": "","targetType": ""}],"hourCron": {"endHour": "","interval": "","startHour": ""},"md5": "","minuteCron": {"endHour": "","interval": "","startHour": ""},"monthCron": {"hour": "","minute": "","monthDay": []},"partition": "","projectId": 0,"publishFlag": false,"tables": [{"descTable": "","jobName": "","srcTable": "","where": ""}],"weekCron": {"hour": "","minute": "","weekDay": []},"where": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"jobName": "","msg": "","status": 0,"table": ""}]}}
+
+
+X.X.X 下载运行结果
+curl -XGET 'http://default-host/api/v1/jobs/downloadResult?1=1&codeMd5=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 运行历史
+curl -XGET 'http://default-host/api/v1/jobs/history?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"code": "","codeMd5": "","jobId": 0,"jobName": "","runStatus": 0,"runtime": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 运行详情
+curl -XGET 'http://default-host/api/v1/jobs/history/{codeMd5}?1=1&codeMd5=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"code": "","codeMd5": "","jobId": 0,"jobName": "","jobType": 0,"runStatus": 0,"runtime": ""}}}
+
+
+X.X.X 运行日志
+curl -XGET 'http://default-host/api/v1/jobs/history/{codeMd5}/log?1=1&codeMd5=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 日志下载
+curl -XGET 'http://default-host/api/v1/jobs/history/{codeMd5}/log/download?1=1&codeMd5=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 获取任务详情
+curl -XGET 'http://default-host/api/v1/jobs/{id}?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"businessFlag": 0,"createTime": "","description": "","envParams": "","id": 0,"isLock": 0,"jobMode": 0,"jobType": 0,"lockTime": "","locker": "","lockerShow": "","manager": "","managerShow": "","modifyTime": "","modifyUser": "","name": "","opFlag": false,"periodType": 0,"periodTypeString": "","publish": false,"scheduleResourceId": 0}}}
+
+
+X.X.X VR2.5.0【修改】保存任务 支持ftp、sftp、oss
+curl -XPUT 'http://default-host/api/v1/jobs/{id}?1=1&saveJob=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": "","dataxCode": {"columnMappings": [{"from": "","showDelete": true,"to": ""}],"reader": {"cat": "","changeColName": [],"colChange": true,"column": [{}],"compressedType": "","constants": [],"dataFileResource": {"columnSeparator": "","dataFileName": "","includeMetadata": false,"isHa": true,"nameNode1": "","nameNode2": "","nullFormat": "","resourceId": 0,"resourcePath": ""},"dataSource": "","dsCode": "","dsName": "","expression": "","fileDataSourceReaderOptionView": {"columnSeparator": "","compressedType": "","encryptionType": "","filePaths": [],"fileType": "","fileWildcard": "","includeMetadata": false,"metadataLocation": "","metadataPath": "","nullFormat": "","partitionFormat": "","secretKey": "","syncModel": ""},"hbaseReadMode": "","highSetting": "","id": 0,"partition": "","pavingData": true,"readMode": "","splitPk": "","table": "","type": "","typeString": "","where": ""},"setting": {"channel": 0,"record": 0,"speedByte": 0},"writer": {"changeColName": [],"colChange": true,"column": [{}],"dataSource": "","dsCode": "","dsName": "","fileDataSourceWriteOptionView": {"columnSeparator": "","compressedType": "","fileName": "","filePath": "","fileType": "","nullFormat": "","writeMetaData": true,"writeModel": ""},"flushMode": "","id": 0,"partition": "","postSql": "","preSql": "","rowKeyRule": "","table": "","topic": "","type": "","typeString": "","versionColumnRule": "","writeMode": ""}},"description": "","dimTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","primaryKey": "","tableName": ""}],"envParams": "","projectId": 0,"resultTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","outputNums": 0,"primaryKey": "","tableName": "","timeInterval": 0,"updateMode": 0}],"schedule": {"custom": 0,"cycleType": 0,"dayCron": {"hour": "","minute": ""},"hourCron": {"endHour": "","interval": "","startHour": ""},"minuteCron": {"endHour": "","interval": "","startHour": ""},"monthCron": {"hour": "","minute": "","monthDay": []},"preJobIds": "","priority": 0,"retry": 0,"selfDepend": 0,"status": 0,"timeOut": 0,"weekCron": {"hour": "","minute": "","weekDay": []}},"scheduleResourceId": 0,"sourceTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"eventTimeField": "","flinkWindow": 0,"id": 0,"mappingTable": "","maxDelayTime": 0,"offsetReset": 0,"tableName": ""}],"workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 删除任务
+curl -XDELETE 'http://default-host/api/v1/jobs/{id}?1=1&delJobReq=1111111&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0,"submitRemark": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 自动推荐上游任务
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/autoRecommendPreJobs?1=1&autoRecommend=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","id": 0,"manager": "","managerShow": "","name": "","tableName": "","typeString": "","userName": ""}]}}
+
+
+X.X.X 取消任务
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/cancel?1=1&cancelJob=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"codeMd5": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 任务克隆
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/clone?1=1&cloneJob=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","parentId": 0,"periodType": 0,"periodTypeString": "","publish": false,"type": 0}}}
+
+
+X.X.X 获取任务代码
+curl -XGET 'http://default-host/api/v1/jobs/{id}/code?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"code": "","dataxCode": {"columnMappings": [{"from": "","showDelete": true,"to": ""}],"reader": {"cat": "","changeColName": [],"colChange": true,"column": [{}],"compressedType": "","constants": [],"dataFileResource": {"columnSeparator": "","dataFileName": "","includeMetadata": false,"isHa": true,"nameNode1": "","nameNode2": "","nullFormat": "","resourceId": 0,"resourcePath": ""},"dataSource": "","dsCode": "","dsName": "","expression": "","fileDataSourceReaderOptionView": {"columnSeparator": "","compressedType": "","encryptionType": "","filePaths": [],"fileType": "","fileWildcard": "","includeMetadata": false,"metadataLocation": "","metadataPath": "","nullFormat": "","partitionFormat": "","secretKey": "","syncModel": ""},"hbaseReadMode": "","highSetting": "","id": 0,"partition": "","pavingData": true,"readMode": "","splitPk": "","table": "","type": "","typeString": "","where": ""},"setting": {"channel": 0,"record": 0,"speedByte": 0},"writer": {"changeColName": [],"colChange": true,"column": [{}],"dataSource": "","dsCode": "","dsName": "","fileDataSourceWriteOptionView": {"columnSeparator": "","compressedType": "","fileName": "","filePath": "","fileType": "","nullFormat": "","writeMetaData": true,"writeModel": ""},"flushMode": "","id": 0,"partition": "","postSql": "","preSql": "","rowKeyRule": "","table": "","topic": "","type": "","typeString": "","versionColumnRule": "","writeMode": ""}},"id": 0,"jobType": 0,"name": ""}}}
+
+
+X.X.X 获取任务代码Md5值
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/codeMd5?1=1&id=1111111&codeJob=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.4.12【新增】根据历史任务id获取历史版本源表、维表、结果表信息(实时计算), 暂时未实现
+curl -XGET 'http://default-host/api/v1/jobs/{id}/hisTableInfo?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"dimTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","primaryKey": "","tableName": ""}],"resultTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","outputNums": 0,"primaryKey": "","tableName": "","timeInterval": 0,"updateMode": 0}],"sourceTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"eventTimeField": "","flinkWindow": 0,"id": 0,"mappingTable": "","maxDelayTime": 0,"offsetReset": 0,"tableName": ""}]}}}
+
+
+X.X.X 获取已发布任务列表
+curl -XGET 'http://default-host/api/v1/jobs/{id}/listPubJobs?1=1&id=1111111&projectId=1111111&name=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"baselineId": 0,"code": "","comment": "","createTime": "","createUser": "","deleted": 0,"envParams": "","id": 0,"jobCategory": 0,"jobId": 0,"manager": "","managerId": 0,"modifyTime": "","modifyUser": "","name": "","periodType": 0,"projectId": 0,"runParams": "","scheduleResourceId": 0,"scheduleResourceName": "","type": 0}]}}
+
+
+X.X.X 任务移动
+curl -XPUT 'http://default-host/api/v1/jobs/{id}/move?1=1&moveJob=1111111&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"parentId": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 获取下游任务列表
+curl -XGET 'http://default-host/api/v1/jobs/{id}/nextJobs?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"id": 0,"manager": "","name": "","typeString": "","userName": ""}]}}
+
+
+X.X.X 任务发布
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/publish?1=1&id=1111111&publishJob=1111111&jobId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"comment": "","cpu": 0,"memory": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 任务重命名
+curl -XPUT 'http://default-host/api/v1/jobs/{id}/rename?1=1&renameJob=1111111&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 运行任务
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/run?1=1&runJob=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": "","codeMd5": "","envParams": "","jobType": 0,"parameters": [{"label": "","value": ""}],"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 获取任务调度信息
+curl -XGET 'http://default-host/api/v1/jobs/{id}/schedule?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"cycleType": 0,"dayCron": {"hour": "","minute": ""},"hourCron": {"endHour": "","interval": "","startHour": ""},"id": 0,"jobId": 0,"minuteCron": {"endHour": "","interval": "","startHour": ""},"monthCron": {"hour": "","minute": "","monthDay": []},"preJobScheduleRes": [{"id": 0,"manager": "","managerShow": "","name": "","type": 0,"typeString": "","userName": ""}],"priority": 0,"retry": 0,"scheduleResourceId": 0,"scheduleResourceName": "","selfDepend": 0,"weekCron": {"hour": "","minute": "","weekDay": []}}}}
+
+
+X.X.X 保存任务调度信息
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/schedule?1=1&id=1111111&tagSaveJobSchedule=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0,"saveJobSchedule": {"custom": 0,"cycleType": 0,"dayCron": {"hour": "","minute": ""},"hourCron": {"endHour": "","interval": "","startHour": ""},"minuteCron": {"endHour": "","interval": "","startHour": ""},"monthCron": {"hour": "","minute": "","monthDay": []},"preJobIds": "","priority": 0,"retry": 0,"selfDepend": 0,"status": 0,"timeOut": 0,"weekCron": {"hour": "","minute": "","weekDay": []}}}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 智能ide
+curl -XGET 'http://default-host/api/v1/jobs/{id}/smartide/info?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"functions": [],"tables": [{"columns": [],"text": ""}]}}}
+
+
+X.X.X V2.4.12 【新增】 配置模式切换为脚本模式
+curl -XPUT 'http://default-host/api/v1/jobs/{id}/switch?1=1&switchFlinkJob=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"jobMode": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.4.12【新增】根据任务id获取源表、维表、结果表信息(实时计算)
+curl -XGET 'http://default-host/api/v1/jobs/{id}/tableInfo?1=1&id=1111111&jobId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"dimTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","primaryKey": "","tableName": ""}],"resultTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"id": 0,"mappingTable": "","outputNums": 0,"primaryKey": "","tableName": "","timeInterval": 0,"updateMode": 0}],"sourceTableInfoList": [{"columnSql": "","datasourceId": 0,"datasourceType": 0,"eventTimeField": "","flinkWindow": 0,"id": 0,"mappingTable": "","maxDelayTime": 0,"offsetReset": 0,"tableName": ""}]}}}
+
+
+X.X.X 表结构信息
+curl -XPOST 'http://default-host/api/v1/jobs/{id}/tableMeta?1=1&sourceAndTarget=1111111&asTarget=1111111&projectId=1111111&source=1111111&id=1111111&id=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"asTarget": false,"projectId": 0,"source": {"columnSeparator": "","compressedType": "","encryptionType": "","filePaths": [],"fileType": "","fileWildcard": "","filterData": "","hdfsAddress": "","id": 0,"includeMetadata": false,"inputJSON": "","localDataResource": true,"metadataLocation": "","metadataPath": "","nullFormat": "","ossObjectPrefix": "","paramSettings": "","partitionFormat": "","readModel": "","readType": 0,"resourceId": 0,"secretKey": "","tableName": [],"where": ""},"target": {"columnSeparator": "","compressedType": "","encryptionType": "","filePaths": [],"fileType": "","fileWildcard": "","filterData": "","hdfsAddress": "","id": 0,"includeMetadata": false,"inputJSON": "","metadataLocation": "","metadataPath": "","nullFormat": "","ossObjectPrefix": "","paramSettings": "","partitionFormat": "","readModel": "","readType": 0,"secretKey": "","tableName": "","where": ""}}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"columns": [{"colName": "","colType": "","colTypeInt": 0,"comment": "","index": 0}],"ifPt": false,"pts": [],"splitPk": ""}}}
+
+
+X.X.X 解锁任务
+curl -XPUT 'http://default-host/api/v1/jobs/{id}/unlock?1=1&baseReq=1111111&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"entityId": 0,"isLock": 0,"lockTime": "","locker": 0,"lockerShow": ""}}}
+
+
+X.X.X 获取任务历史版本
+curl -XGET 'http://default-host/api/v1/jobs/{id}/versions?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"comment": "","commitTime": "","commitUser": "","id": 0,"jobId": 0,"userName": "","version": 0}]}}
+
+
+X.X 资源管理-目录
+X.X.X 新增目录
+curl -XPOST 'http://default-host/api/v1/jobs/resource/dir?1=1&addDirReq=1111111&name=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","parentId": 0,"projectId": 0,"sync": false}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 资源目录及资源树
+curl -XGET 'http://default-host/api/v1/jobs/resource/dir/resourceTree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 目录
+curl -XGET 'http://default-host/api/v1/jobs/resource/dir/tree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 目录删除
+curl -XDELETE 'http://default-host/api/v1/jobs/resource/dir/{id}?1=1&id=1111111&baseReq=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 目录移动
+curl -XPUT 'http://default-host/api/v1/jobs/resource/dir/{id}/move?1=1&id=1111111&optDirReq=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"parentId": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 目录重命名
+curl -XPUT 'http://default-host/api/v1/jobs/resource/dir/{id}/rename?1=1&id=1111111&renameDir=1111111&name=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 算法中心-集成开发平台
+X.X.X 新增算法任务
+curl -XPOST 'http://default-host/datascience/job/add?1=1&addJobReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"description": "","jobType": 0,"name": "","periodType": 0,"projectId": 0,"workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"fileType": 0,"isLock": 0,"jobId": 0,"jobType": 0,"lockTime": "","locker": "","lockerShow": "","name": "","parentId": 0,"periodType": 0}}}
+
+
+X.X.X 运行任务
+curl -XPOST 'http://default-host/datascience/job/run?1=1&runJobReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": "","codeMd5": "","envParams": "","jobId": 0,"jobType": 0,"parameters": [{"label": "","value": ""}],"projectId": 0,"type": 0,"userId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 资源管理
+X.X.X 模糊查询资源列表
+curl -XGET 'http://default-host/api/v1/jobs/resource?1=1&name=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": ""}]}}
+
+
+X.X.X 资源数据文件上传
+curl -XPOST 'http://default-host/api/v1/jobs/resource?1=1&file=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 资源列表下拉
+curl -XGET 'http://default-host/api/v1/jobs/resource/resources?1=1&name=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"id": 0,"name": ""}]}}
+
+
+X.X.X 查询资源文件的详细信息
+curl -XGET 'http://default-host/api/v1/jobs/resource/{id}?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"createTime": "","createUser": "","description": "","id": 0,"modifyTime": "","modifyUser": "","name": "","typeString": ""}}}
+
+
+X.X.X 删除资源文件
+curl -XDELETE 'http://default-host/api/v1/jobs/resource/{id}?1=1&delResource=1111111&projectId=1111111&submitRemark=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0,"submitRemark": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 资源文件下载
+curl -XGET 'http://default-host/api/v1/jobs/resource/{id}/download?1=1&id=1111111&moveResourceFile=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 提交/发布资源到发布管理中心
+curl -XPOST 'http://default-host/api/v1/jobs/resource/{id}/submit?1=1&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": 0}}
+
+
+X.X 发布管理
+X.X.X 发布包列表
+curl -XGET 'http://default-host/api/v1/publishing/packages?1=1&pageNum=1111111&pageSize=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"creatingTime": "","creator": "","creatorName": "","id": 0,"name": "","publishedTargetCount": 0,"publisher": "","publisherName": "","publishingState": 0,"publishingTime": "","totalTargetCount": 0}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 创建发布包
+curl -XPOST 'http://default-host/api/v1/publishing/packages?1=1&createPublishingPackage=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"ids": "","name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 批量发布
+curl -XPOST 'http://default-host/api/v1/publishing/packages/publish?1=1&idCollection=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"ids": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 发布包详情
+curl -XGET 'http://default-host/api/v1/publishing/packages/{packageId}?1=1&pageNum=1111111&pageSize=1111111&packageId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"id": 0,"name": "","nature": 0,"operationType": 0,"requestTime": "","requester": "","requesterName": "","state": 0,"type": 0}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 待发布对象列表
+curl -XGET 'http://default-host/api/v1/publishing/targets?1=1&pageNum=1111111&pageSize=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"id": 0,"name": "","nature": 0,"operationType": 0,"requestTime": "","requester": "","requesterName": "","state": 0,"type": 0}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X 数据文件
+X.X.X [数据集成二期] 数据集成上传资源
+curl -XPOST 'http://default-host/api/v1/resource/batchUpload?1=1&files=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": 0}}
+
+
+X.X.X [数据集成二期] 数据文件列表(分页)
+curl -XGET 'http://default-host/api/v1/resource/datafile?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","fileName": "","opsUserName": "","projectId": 0,"resourceId": 0,"uploadTime": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X [数据集成二期] 数据文件列表
+curl -XGET 'http://default-host/api/v1/resource/list?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","fileName": "","opsUserName": "","projectId": 0,"resourceId": 0,"uploadTime": ""}]}}
+
+
+X.X.X [数据集成二期] 数据文件详情
+curl -XGET 'http://default-host/api/v1/resource/{resourceId}?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"description": "","fileName": "","opsUserName": "","projectId": 0,"resourceId": 0,"uploadTime": ""}}}
+
+
+X.X.X [数据集成二期] 数据文件保存
+curl -XPUT 'http://default-host/api/v1/resource/{resourceId}?1=1&dataFileResourcesVo=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"description": "","fileName": "","opsUserName": "","projectId": 0,"resourceId": 0,"uploadTime": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X [数据集成二期] 数据文件删除
+curl -XDELETE 'http://default-host/api/v1/resource/{resourceId}?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 函数管理-目录
+X.X.X 新增目录
+curl -XPOST 'http://default-host/api/v1/jobs/function/dir?1=1&addDirReq=1111111&name=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","parentId": 0,"projectId": 0,"sync": false}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 函数及目录树
+curl -XGET 'http://default-host/api/v1/jobs/function/dir/funcTree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"customData": [{"children": [{"children": [{}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"systemData": [{"children": [{"children": [{}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}]}}}
+
+
+X.X.X 函数及目录树
+curl -XGET 'http://default-host/api/v1/jobs/function/dir/functionTree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"customData": [{"children": [{"children": [{}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"systemData": [{"children": [{"children": [{}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}]}}}
+
+
+X.X.X 函数目录树
+curl -XGET 'http://default-host/api/v1/jobs/function/dir/tree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 目录删除
+curl -XDELETE 'http://default-host/api/v1/jobs/function/dir/{id}?1=1&id=1111111&baseReq=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 目录移动
+curl -XPUT 'http://default-host/api/v1/jobs/function/dir/{id}/move?1=1&id=1111111&optDirReq=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"parentId": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"children": [{"children": [{}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}],"funcType": 0,"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 目录重命名
+curl -XPUT 'http://default-host/api/v1/jobs/function/dir/{id}/rename?1=1&id=1111111&renameDir=1111111&name=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 标签工厂-标签管理
+X.X.X 查询标签列表
+curl -XGET 'http://default-host/api/v1/tags/tag?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","entityName": "","isLock": 0,"jobId": 0,"jobName": "","lifeCycleStr": "","logicTable": "","publish": false,"tag": "","tagId": 0,"tagName": "","tagScheduleCycle": "","tagValue": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 新增标签
+curl -XPOST 'http://default-host/api/v1/tags/tag?1=1&addTag=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"description": "","entityId": 0,"lifeCycle": 0,"lifeCycleCustom": 0,"projectId": 0,"tag": "","tagName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"tagId": 0}}}
+
+
+X.X.X 实体及标签目录树
+curl -XGET 'http://default-host/api/v1/tags/tag/tree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"enName": "","id": 0,"isLock": 0,"label": "","lockTime": "","locker": 0,"lockerShow": "","parentId": 0,"type": 0}],"enName": "","id": 0,"isLock": 0,"label": "","lockTime": "","locker": 0,"lockerShow": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 查询标签基本信息
+curl -XGET 'http://default-host/api/v1/tags/tag/{tagId}?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"description": "","entityName": "","lifeCycleStr": "","tag": "","tagName": ""}}}
+
+
+X.X.X 编辑标签
+curl -XPUT 'http://default-host/api/v1/tags/tag/{tagId}?1=1&tagId=1111111&editTag=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"description": "","lifeCycle": 0,"lifeCycleCustom": 0,"tagName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 删除标签
+curl -XDELETE 'http://default-host/api/v1/tags/tag/{tagId}?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 克隆标签
+curl -XPOST 'http://default-host/api/v1/tags/tag/{tagId}/clone?1=1&tagId=1111111&cloneTag=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"tag": "","tagName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"tagId": 0}}}
+
+
+X.X.X 查询标签详细信息
+curl -XGET 'http://default-host/api/v1/tags/tag/{tagId}/detail?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"entityCnName": "","entityId": 0,"entityScheduleCycle": 0,"isLock": 0,"jobId": 0,"jobName": "","lockTime": "","locker": 0,"lockerShow": "","publish": false,"tagExtendConfig": {"maxNumber": 0,"timeDecay": 0,"timeDecayPeriod": 0,"timeSpan": 0,"weights": [{"groupName": "","weight": 0}]},"tagGroups": [{"entityId": 0,"groupName": "","subType": 0,"tagValues": [{"configRels": [],"tagConfigs": [{"conditionType": 0,"fieldName": "","propertyId": 0,"propertyType": 0,"values": []}],"value": "","valueType": 0}]}],"tagId": 0,"tagName": "","tagType": 0}}}
+
+
+X.X.X 保存标签详细信息
+curl -XPOST 'http://default-host/api/v1/tags/tag/{tagId}/detail?1=1&tagId=1111111&tagDetail=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"entityId": 0,"tagExtendConfig": {"maxNumber": 0,"timeDecay": 0,"timeDecayPeriod": 0,"timeSpan": 0,"weights": [{"groupName": "","weight": 0}]},"tagGroups": [{"entityId": 0,"groupName": "","subType": 0,"tagValues": [{"configRels": [],"tagConfigs": [{"conditionType": 0,"fieldName": "","propertyId": 0,"propertyType": 0,"values": []}],"value": "","valueType": 0}]}],"tagId": 0,"tagType": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"jobId": 0,"jobName": ""}}}
+
+
+X.X.X 标签版本对比
+curl -XGET 'http://default-host/api/v1/tags/tag/{tagId}/detail/version/{version}?1=1&version=1111111&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"entityCnName": "","entityId": 0,"entityScheduleCycle": 0,"isLock": 0,"jobId": 0,"jobName": "","lockTime": "","locker": 0,"lockerShow": "","publish": false,"tagExtendConfig": {"maxNumber": 0,"timeDecay": 0,"timeDecayPeriod": 0,"timeSpan": 0,"weights": [{"groupName": "","weight": 0}]},"tagGroups": [{"entityId": 0,"groupName": "","subType": 0,"tagValues": [{"configRels": [],"tagConfigs": [{"conditionType": 0,"fieldName": "","propertyId": 0,"propertyType": 0,"values": []}],"value": "","valueType": 0}]}],"tagId": 0,"tagName": "","tagType": 0}}}
+
+
+X.X.X 标签发布
+curl -XPUT 'http://default-host/api/v1/tags/tag/{tagId}/publish?1=1&publishTag=1111111&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"description": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 获取标签信息（编辑标签用）
+curl -XGET 'http://default-host/api/v1/tags/tag/{tagId}/simple?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"description": "","lifeCycle": 0,"lifeCycleCustom": 0,"tagId": 0,"tagName": ""}}}
+
+
+X.X.X 标签解锁
+curl -XPUT 'http://default-host/api/v1/tags/tag/{tagId}/unlock?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 查询标签版本信息
+curl -XGET 'http://default-host/api/v1/tags/tag/{tagId}/version?1=1&tagId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","publishTime": "","publishUser": "","version": 0}]}}
+
+
+X.X 表查询
+X.X.X 表字段查询
+curl -XGET 'http://default-host/api/v1/jobs/table/columns?1=1&tableName=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"cdId": 0,"columnName": "","comment": "","integerIdx": 0,"typeName": ""}]}}
+
+
+X.X.X 表字段查询
+curl -XGET 'http://default-host/api/v1/jobs/table/data/preview?1=1&tableName=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{}]}}
+
+
+X.X.X 分区字段查询
+curl -XGET 'http://default-host/api/v1/jobs/table/partitions?1=1&tableName=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"createTime": "","partId": 0,"partName": "","recordNum": 0,"store": 0,"updateTime": ""}]}}
+
+
+X.X.X 表列表
+curl -XGET 'http://default-host/api/v1/jobs/table/tables?1=1&tableName=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"tblId": 0,"tblName": ""}]}}
+
+
+X.X 平台配置
+X.X.X 任务同步模式: 1 增量同步、2 全量同步
+curl -XGET 'http://default-host/api/v1/conf/dataSyncModes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X 字段映射模版
+curl -XGET 'http://default-host/api/v1/conf/fieldMapping?1=1&dsType=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"fieldMapingInfos": [{"sourceType": "","targetType": ""}],"sourceFieldTypes": [],"targetFieldTypes": []}}}
+
+
+X.X.X 文件压缩类型: 1 none 、2 zip 、3 gzip
+curl -XGET 'http://default-host/api/v1/conf/fileCompressedTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X 文件加密类型: 1 none、2 rsa
+curl -XGET 'http://default-host/api/v1/conf/fileEncryptionTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X 文件类型:1 none 、2 csv 、3 txt
+curl -XGET 'http://default-host/api/v1/conf/fileTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X 文件写入模式: 1 truncate 写入前清理已有数据  2 append 追加写入
+curl -XGET 'http://default-host/api/v1/conf/fileWriteModes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X job类型查询
+curl -XGET 'http://default-host/api/v1/conf/jobTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{}]}}
+
+
+X.X.X 待发布对象类型列表
+curl -XGET 'http://default-host/api/v1/conf/publishingTargetTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": 0}]}}
+
+
+X.X.X 资源类型
+curl -XGET 'http://default-host/api/v1/conf/resourceTypes?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{}]}}
+
+
+X.X 算法中心-资源数据管理
+X.X.X 资源数据文件上传
+curl -XPOST 'http://default-host/datascience/resource/upload?1=1&file=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X 函数管理
+X.X.X 新建函数
+curl -XPOST 'http://default-host/api/v1/jobs/function?1=1&saveFunction=1111111&className=1111111&name=1111111&projectId=1111111&resourceIds=1111111&workdirId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"businessFlag": 0,"className": "","command": "","description": "","flinkFuncType": 0,"name": "","projectId": 0,"resourceIds": "","submitRemark": "","usage": "","workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"funcType": 0,"id": 0,"label": "","parentId": 0}}}
+
+
+X.X.X 查询函数的详细信息
+curl -XGET 'http://default-host/api/v1/jobs/function/{id}?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"className": "","command": "","createTime": "","createUser": "","description": "","flinkFuncType": 0,"id": 0,"modifyTime": "","modifyUser": "","name": "","resourceIds": "","type": 0,"typeString": "","usage": "","workdirId": 0,"workdirName": ""}}}
+
+
+X.X.X 根据id查询function
+curl -XPOST 'http://default-host/api/v1/jobs/function/{id}?1=1&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 编辑函数
+curl -XPUT 'http://default-host/api/v1/jobs/function/{id}?1=1&saveFunction=1111111&className=1111111&name=1111111&projectId=1111111&resourceIds=1111111&workdirId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"businessFlag": 0,"className": "","command": "","description": "","flinkFuncType": 0,"name": "","projectId": 0,"resourceIds": "","submitRemark": "","usage": "","workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 删除函数
+curl -XDELETE 'http://default-host/api/v1/jobs/function/{id}?1=1&delFunction=1111111&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0,"submitRemark": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 移动函数
+curl -XPUT 'http://default-host/api/v1/jobs/function/{id}/move?1=1&moveFunction=1111111&parentId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","parentId": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 提交/发布函数到发布管理中心
+curl -XPOST 'http://default-host/api/v1/jobs/function/{id}/submit?1=1&projectId=1111111&id=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 数据同步
+X.X.X [数据集成二期] 获取项目下根据数据源类型和数据源关系
+curl -XGET 'http://default-host/api/v1/dataSync/datasource/relation?1=1&jobId=1111111&scene=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"dataSourceInfos": [{"id": 0,"name": "","type": 0,"typeString": ""}],"datasourceName": "","datasourceType": 0}]}}
+
+
+X.X.X 表结构信息
+curl -XGET 'http://default-host/api/v1/dataSync/datasources?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"id": 0,"name": "","type": 0,"typeString": ""}]}}
+
+
+X.X.X [数据集成二期] 获取用户上传文件的元数据
+curl -XGET 'http://default-host/api/v1/dataSync/resources/meta/{resourceId}?1=1&columnSeparator=1111111&resourceId=1111111&includeMetadata=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"columns": [{"colName": "","colType": "","colTypeInt": 0,"comment": "","index": 0}],"ifPt": false,"pts": [],"splitPk": ""}}}
+
+
+X.X.X 表数据预览
+curl -XGET 'http://default-host/api/v1/dataSync/{id}/data/preview?1=1&projectName=1111111&projectId=1111111&id=1111111&tableName=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": []}}
+
+
+X.X.X 表字段
+curl -XGET 'http://default-host/api/v1/dataSync/{id}/table/columns?1=1&projectId=1111111&id=1111111&tableName=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"colName": "","colType": "","colTypeInt": 0,"comment": "","index": 0}]}}
+
+
+X.X.X 表结构信息
+curl -XGET 'http://default-host/api/v1/dataSync/{id}/tableMeta?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"columns": [{"colName": "","colType": "","colTypeInt": 0,"comment": "","index": 0}],"ifPt": false,"pts": [],"splitPk": ""}}}
+
+
+X.X.X 根据数据源id获取数据库表及kafka主题
+curl -XGET 'http://default-host/api/v1/dataSync/{id}/tables?1=1&id=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": []}}
+
+
+X.X 标签工厂-实体管理
+X.X.X 根据条件查询实体列表
+curl -XGET 'http://default-host/api/v1/tags/entity?1=1&pageNum=1111111&pageSize=1111111&projectId=1111111&dataZoneId=1111111&entityName=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"cnName": "","dataZoneId": 0,"dataZoneName": "","deleteFlag": false,"description": "","enName": "","entityId": 0,"tagNums": 0}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 新建实体
+curl -XPOST 'http://default-host/api/v1/tags/entity?1=1&addEntity=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"bindTableType": 0,"cnName": "","dataZoneId": 0,"description": "","enName": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"entityId": 0}}}
+
+
+X.X.X 获取表字段列表
+curl -XGET 'http://default-host/api/v1/tags/entity/columns?1=1&projectId=1111111&tableName=1111111&dbName=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","fieldName": "","fieldType": 0,"fieldTypeStr": ""}]}}
+
+
+X.X.X 获取实体下拉列表
+curl -XGET 'http://default-host/api/v1/tags/entity/dropBox?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"label": "","value": ""}]}}
+
+
+X.X.X 来源表列表
+curl -XGET 'http://default-host/api/v1/tags/entity/tables?1=1&projectId=1111111&tableName=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"dbName": "","jobId": "","tableName": ""}]}}
+
+
+X.X.X 获取保存逻辑表的目标层级目录
+curl -XGET 'http://default-host/api/v1/tags/entity/targetDir?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"defaultDir": false,"workdirId": 0,"workdirName": ""}]}}
+
+
+X.X.X 数据域与标签实体树
+curl -XGET 'http://default-host/api/v1/tags/entity/tree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"deleteFlag": false,"enName": "","id": 0,"isLock": 0,"label": "","lockTime": "","locker": 0,"lockerShow": "","parentId": 0,"type": 0}],"deleteFlag": false,"enName": "","id": 0,"isLock": 0,"label": "","lockTime": "","locker": 0,"lockerShow": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 获取实体信息详情（包括基本信息）
+curl -XGET 'http://default-host/api/v1/tags/entity/{entityId}?1=1&entityId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"behaviorCnt": "","behaviorTime": "","behaviorTimeFormat": 0,"bindTableType": 0,"cnName": "","columnList": [{"deleteFlag": false,"description": "","fieldName": "","fieldType": 0,"fieldTypeStr": "","propertyId": 0}],"dataZoneName": "","dbName": "","description": "","enName": "","entityId": 0,"entityKey": "","isLock": 0,"lockTime": "","locker": 0,"lockerShow": "","opFlag": false,"sourceJobId": 0,"tableName": "","workdirId": 0,"workdirName": ""}}}
+
+
+X.X.X 修改标签实体
+curl -XPUT 'http://default-host/api/v1/tags/entity/{entityId}?1=1&updateEntity=1111111&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"cnName": "","dataZoneId": 0,"description": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 删除标签实体
+curl -XDELETE 'http://default-host/api/v1/tags/entity/{entityId}?1=1&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 克隆标签实体
+curl -XPOST 'http://default-host/api/v1/tags/entity/{entityId}/clone?1=1&cloneEntity=1111111&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"cnName": "","enName": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 【标签二期修改】保存标签实体
+curl -XPUT 'http://default-host/api/v1/tags/entity/{entityId}/save?1=1&saveEntity=1111111&description=1111111&fieldType=1111111&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"behaviorCnt": "","behaviorTime": "","behaviorTimeFormat": 0,"bindTableType": 0,"columnList": [{"description": "","fieldName": "","fieldType": 0,"propertyId": 0}],"dbName": "","description": "","entityKey": "","projectId": 0,"sourceJobId": 0,"tableName": "","workdirId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 获取实体信息（编辑实体用）
+curl -XGET 'http://default-host/api/v1/tags/entity/{entityId}/simple?1=1&entityId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"cnName": "","dataZoneId": 0,"dataZoneName": "","description": "","entityId": 0}}}
+
+
+X.X.X 获取实体属性下拉列表
+curl -XGET 'http://default-host/api/v1/tags/entity/{entityId}/tagProperty?1=1&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","fieldName": "","fieldType": 0,"propertyId": 0}]}}
+
+
+X.X.X 解锁实体
+curl -XPUT 'http://default-host/api/v1/tags/entity/{entityId}/unlock?1=1&unlockEntity=1111111&projectId=1111111&entityId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"entityId": 0,"isLock": 0,"lockTime": "","locker": 0,"lockerShow": ""}}}
+
+
+X.X 目录管理
+X.X.X 新增目录
+curl -XPOST 'http://default-host/api/v1/jobs/dir?1=1&addDirReq=1111111&name=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","parentId": 0,"projectId": 0,"sync": false}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"id": 0,"label": "","parentId": 0,"type": 0}}}
+
+
+X.X.X 目录及任务树
+curl -XGET 'http://default-host/api/v1/jobs/dir/jobTree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","opFlag": false,"parentId": 0,"periodType": 0,"periodTypeString": "","publish": false,"templateDir": false,"type": 0}],"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","opFlag": false,"parentId": 0,"periodType": 0,"periodTypeString": "","publish": false,"templateDir": false,"type": 0}]}}
+
+
+X.X.X 目录树
+curl -XGET 'http://default-host/api/v1/jobs/dir/tree?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"children": [{}],"id": 0,"label": "","parentId": 0,"type": 0}],"id": 0,"label": "","parentId": 0,"type": 0}]}}
+
+
+X.X.X 目录删除
+curl -XDELETE 'http://default-host/api/v1/jobs/dir/{id}?1=1&id=1111111&baseReq=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 目录移动
+curl -XPUT 'http://default-host/api/v1/jobs/dir/{id}/move?1=1&id=1111111&optDirReq=1111111&parentId=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"parentId": 0,"projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"children": [{"children": [{}],"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","opFlag": false,"parentId": 0,"periodType": 0,"periodTypeString": "","publish": false,"templateDir": false,"type": 0}],"id": 0,"isLock": 0,"jobType": 0,"label": "","lockTime": "","locker": "","lockerShow": "","opFlag": false,"parentId": 0,"periodType": 0,"periodTypeString": "","publish": false,"templateDir": false,"type": 0}}}
+
+
+X.X.X 目录重命名
+curl -XPUT 'http://default-host/api/v1/jobs/dir/{id}/rename?1=1&id=1111111&renameDir=1111111&name=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"name": "","projectId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 数据克隆
+X.X.X 数据导出
+curl -XGET 'http://default-host/api/v1/jobs/dataclone/exportV2?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"key": "","url": ""}}}
+
+
+X.X.X 导入
+curl -XPOST 'http://default-host/api/v1/jobs/dataclone/import?1=1&importReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"operationType": 0,"preKey": "","projectId": 0,"publishFlag": false,"targetManagerId": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 导入
+curl -XPOST 'http://default-host/api/v1/jobs/dataclone/importV2?1=1&file=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 预导入
+curl -XPOST 'http://default-host/api/v1/jobs/dataclone/pre/import?1=1&file=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"operationType": {},"preKey": ""}}}
+
+
+X.X.X 数据生成文件
+curl -XGET 'http://default-host/api/v1/jobs/dataclone/publish?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"key": "","url": ""}}}
+
+

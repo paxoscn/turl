@@ -1,0 +1,45 @@
+X.X license服务
+X.X.X 激活
+curl -XPOST 'http://default-host/license/activity?1=1&req=1111111&key=1111111&onlyId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"key": "","onlyId": ""}'
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {}}
+
+
+X.X.X license状态查询
+curl -XGET 'http://default-host/license/status?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {"key": "","onlyId": "","status": 0,"endTime": "","remindDays": 0}}
+
+
+X.X.X syncData
+curl -XPOST 'http://default-host/license/syncData?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"code": 0,"data": {},"message": ""}
+
+
+X.X.X license上传安装
+curl -XPOST 'http://default-host/license/upload?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {"key": "","onlyId": "","status": 0,"endTime": "","remindDays": 0}}
+
+
+X.X simba-auth-controller
+X.X.X appkey新增修改
+curl -XPOST 'http://default-host/simbaAuth/apply?1=1&simbaAppAuthApplyDTO=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"appKey": "","appName": "","appSecret": ""}'
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {"data": true}}
+
+
+X.X.X appkey删除
+curl -XPOST 'http://default-host/simbaAuth/delete?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {"data": true}}
+
+
+X.X swagger-controller
+X.X.X swaggerResources
+curl -XGET 'http://default-host/swagger-resources?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+[{"location": "","name": "","swaggerVersion": "","url": ""}]
+
+

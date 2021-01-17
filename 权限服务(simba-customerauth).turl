@@ -1,0 +1,228 @@
+X.X 账号管理-子账号管理
+X.X.X 获取子账号列表
+curl -XGET 'http://default-host/auth/accounts?1=1&pageNum=1111111&pageSize=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"admin": false,"createTime": "","email": "","loginName": "","moduleIds": [{"moduleId": 0,"title": ""}],"phone": "","roleIds": "","theme": 0,"userId": 0,"userName": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 子账号配置-账号角色列表【修改】
+curl -XGET 'http://default-host/auth/accounts/roles?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","roleId": 0,"roleName": ""}]}}
+
+
+X.X.X V2.2.0【新增】个人设置-账号安全-修改密码
+curl -XPOST 'http://default-host/auth/accounts/updatePassword?1=1&userPwdUpdateReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"id": 0,"newPwd": "","oldPwd": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.2.0【修改】新增子账号
+curl -XPOST 'http://default-host/auth/accounts/user?1=1&userAddReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"email": "","loginName": "","password": "","phone": "","userName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.2.0【新增】个人设置-基本信息-修改
+curl -XPOST 'http://default-host/auth/accounts/user/updateUser?1=1&request=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"email": "","id": 0,"loginName": "","phone": "","userName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 删除子账号
+curl -XDELETE 'http://default-host/auth/accounts/users?1=1&userIdsReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"userIds": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 修改子账号
+curl -XPUT 'http://default-host/auth/accounts/{userId}?1=1&updateReq=1111111&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"email": "","loginName": "","phone": "","roleIds": "","theme": 0,"userName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.2.0【修改】个人设置-基本信息
+curl -XGET 'http://default-host/auth/accounts/{userId}/getUserById?1=1&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"email": "","id": 0,"loginName": "","name": "","parentId": 0,"password": "","phone": "","theme": 0,"type": 0,"userName": ""}}}
+
+
+X.X.X 授权
+curl -XPUT 'http://default-host/auth/accounts/{userId}/privileges?1=1&privilegeAssignReq=1111111&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"admin": false,"moduleIds": []}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 重置密码为123456
+curl -XPUT 'http://default-host/auth/accounts/{userId}/resetPassword?1=1&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X V2.2.0【新增】个人设置-主题切换
+curl -XPUT 'http://default-host/auth/accounts/{userId}/theme/{themeId}?1=1&userId=1111111&themeId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X simba平台登录
+X.X.X 检查心跳
+curl -XGET 'http://default-host/check/session?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 根据ticket获取用户信息
+curl -XPOST 'http://default-host/check/ticket?1=1&thirdCheckReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"pwd": "","ticket": "","userName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": ""}
+
+
+X.X.X 根据用户名和密码获取用户信息
+curl -XPOST 'http://default-host/check/user?1=1&thirdCheckReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"pwd": "","ticket": "","userName": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"email": "","id": 0,"loginName": "","name": "","parentId": 0,"password": "","phone": "","theme": 0,"type": 0,"userName": ""}}
+
+
+X.X.X 检查登录用户
+curl -XPOST 'http://default-host/checkUser?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"accountCode": "","accountId": 0,"id": 0,"token": "","userName": "","userType": 0}}}
+
+
+X.X.X 用户登出
+curl -XPOST 'http://default-host/logout?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X pe用户登录
+curl -XPOST 'http://default-host/pe/login?1=1&loginReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"code": "","loginName": "","pwd": "","type": 0}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"accountCode": "","accountId": 0,"id": 0,"token": "","userName": "","userType": 0}}}
+
+
+X.X.X test
+curl -XGET 'http://default-host/test?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X test2
+curl -XGET 'http://default-host/test2?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X test5
+curl -XGET 'http://default-host/test5?1=1&loginReq=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"accountCode": "","accountId": 0,"id": 0,"token": "","userName": "","userType": 0}}}
+
+
+X.X.X 获取验证码
+curl -XGET 'http://default-host/verifyCode?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 查询是否开启验证码
+curl -XGET 'http://default-host/verifyCode/status?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": true}}
+
+
+X.X 账号管理-安全设置
+X.X.X 获取安全设置
+curl -XGET 'http://default-host/config/security?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": {"smsCodeNeeded": false}}}
+
+
+X.X.X 修改安全设置
+curl -XPUT 'http://default-host/config/security?1=1&securityConfigVo=1111111&smsCodeNeeded=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"smsCodeNeeded": false}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X 测试
+X.X.X get
+curl -XGET 'http://default-host/test/get?1=1' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "","codeNum": 0,"success": true,"value": {}}
+
+
+X.X 角色、权限管理【新增】
+X.X.X 项目配置-获取角色权限列表
+curl -XGET 'http://default-host/auth/roleMapping/listAuth/{roleId}?1=1&roleId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"children": [{"code": "","moduleName": ""}],"code": "","moduleName": ""}]}}
+
+
+X.X.X V2.2.0 【新增】子账号配置-登录获取账号首页模块权限列表
+curl -XGET 'http://default-host/auth/roleMapping/listAuthHomeModules/{userId}?1=1&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"detail": "","icon": "","moduleId": 0,"opened": false,"platformCode": 0,"title": "","url": ""}]}}
+
+
+X.X.X V2.2.0 【新增】子账号配置-登录获取账号首页资源管理、数据源管理、账号中心权限
+curl -XGET 'http://default-host/auth/roleMapping/listAuthMgrModules/{userId}?1=1&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"detail": "","icon": "","moduleId": 0,"opened": false,"platformCode": 0,"title": "","url": ""}]}}
+
+
+X.X.X V2.2.0 【新增】新增子账号配置获取授权模块列表
+curl -XGET 'http://default-host/auth/roleMapping/listAuthModules/{userId}?1=1&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"moduleId": 0,"title": ""}]}}
+
+
+X.X.X 子账号配置-登录获取账号权限列表
+curl -XGET 'http://default-host/auth/roleMapping/{projectId}/listAuth/{userId}?1=1&projectId=1111111&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": []}}
+
+
+X.X 项目配置-成员管理
+X.X.X V2.2.3 【修改-新增入参】项目配置-项目角色列表
+curl -XGET 'http://default-host/auth/members/v2/roles?1=1&moduleId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"description": "","roleId": 0,"roleName": ""}]}}
+
+
+X.X.X V2.3.0【修改】项目配置-成员管理-成员列表
+curl -XGET 'http://default-host/auth/projects/{projectId}/members?1=1&projectId=1111111&moduleId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"loginName": "","managerFlag": 0,"roleIds": "","userId": 0,"userName": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 项目配置-成员管理-添加成员
+curl -XPOST 'http://default-host/auth/projects/{projectId}/members?1=1&memberAddReq=1111111&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"roleIds": "","userIds": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 项目配置-编辑成员列表-新增-不分页查所有
+curl -XGET 'http://default-host/auth/projects/{projectId}/members/list?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"loginName": "","managerFlag": 0,"roleIds": "","userId": 0,"userName": ""}],"pageInfo": {"currentPage": 0,"pageSize": 0,"totalCount": 0,"totalPage": 0}}}
+
+
+X.X.X 项目配置-成员管理-获取非本项目成员列表
+curl -XGET 'http://default-host/auth/projects/{projectId}/members/notProMembers?1=1&projectId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": [{"loginName": "","userId": 0,"userName": ""}]}}
+
+
+X.X.X 项目配置-成员管理-修改用户绑定角色【修改】
+curl -XPUT 'http://default-host/auth/projects/{projectId}/members/users/{userId}?1=1&memberUpdateReq=1111111&projectId=1111111&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure -d '{"roleIds": ""}'
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
+X.X.X 项目配置-成员管理-移出本项目
+curl -XDELETE 'http://default-host/auth/projects/{projectId}/members/users/{userId}?1=1&projectId=1111111&userId=1111111' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN' -H 'token: ...' -H 'Content-Type: application/json;charset=utf-8' -H 'Cookie: ...' --compressed --insecure
+
+{"codeDesc": "成功","codeNum": 1000,"success": true,"value": {"data": ""}}
+
+
