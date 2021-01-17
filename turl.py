@@ -27,6 +27,8 @@ if os.getenv('TURL_ARGS'):
 
 turlFile = sys.argv[1]
 
+lastRandom = ""
+
 vars = {}
 
 failed = False
@@ -75,6 +77,7 @@ def applyVars(curl):
     return curl
 
 def nextRandom():
+    global lastRandom
     lastRandom = str(random.randint(0,9999999999))
     return lastRandom
 
@@ -214,8 +217,6 @@ def metNewModule(rootModule, line):
     parentModule["name"] = moduleName
     parentModule["highlighted"] = highlighted
     return parentModule
-
-lastRandom = ""
 
 rootModule = build()
 runModule(rootModule, 0, "", "")
