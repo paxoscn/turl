@@ -68,10 +68,15 @@ def runCase(indexPath, namePath, lines):
             validateRes(indexPath, namePath, lastCurl, line, lastRes)
 
 def applyVars(curl):
-    curl = curl.replace("$random", str(random.randint(0,9999999999)))
+    curl = curl.replace("$lastRandom", lastRandom)
+    curl = curl.replace("$random", nextRandom())
     for k, v in vars.items():
         curl = curl.replace(k, v)
     return curl
+
+def nextRandom():
+    lastRandom = str(random.randint(0,9999999999))
+    return lastRandom
 
 def validateRes(indexPath, namePath, curl, expJson, actJson):
     if actJson is None:
@@ -209,6 +214,8 @@ def metNewModule(rootModule, line):
     parentModule["name"] = moduleName
     parentModule["highlighted"] = highlighted
     return parentModule
+
+lastRandom = ""
 
 rootModule = build()
 runModule(rootModule, 0, "", "")

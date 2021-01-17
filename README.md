@@ -126,7 +126,8 @@ curl 'http://test-simba.startdt.net/api/upms/api/v3/workspaces' \
 
 | 预设变量 | 取值 | 描述 |
 | --- | --- | --- |
-| random | 随机整数 | 可用在创建实体类接口中的实体名称中，避免可能的名称重复。请参考workspaces.turl中的应用。 |
+| random | 随机整数 | 可用在创建实体类接口中的实体名称中，避免可能的名称重复。同一个curl语句中的取值相等。请参考workspaces.turl中的应用。 |
+| lastRandom | 上一次生成的random取值 | 若之前没出现过random变量，则取值为空字符串。 |
 
 ## 3 与第三方系统的集成
 ### 3.1 Swagger
