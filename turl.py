@@ -79,6 +79,7 @@ def applyVars(curl):
 def nextRandom():
     global lastRandom
     lastRandom = str(random.randint(0,9999999999))
+    print "[DEBUG] Generated random number: " + lastRandom
     return lastRandom
 
 def validateRes(indexPath, namePath, curl, expJson, actJson):
@@ -124,6 +125,7 @@ def validateObj(objPath, exp, act):
         elif type(expV) == str or type(expV) == unicode:
             if re.match("^\$[a-zA-Z_]+$", expV):
                 vars[expV] = actV
+                print "[DEBUG] Variable " + expV + " set to " + actV
             if expV.endswith(")"):
                 rule = expV[expV.find("("):][1:-1]
             #    print rule
