@@ -117,12 +117,12 @@ curl 'http://test-simba.startdt.net/api/upms/api/v3/workspaces' \
 (logs.turl)
 ```
 
-### 2.5 Python代码
-以"%"开头的内容为Python代码。
+### 2.5 Shell命令
+以"%"开头的内容为Shell命令。
 
 #### 示例
 ```text
-time.sleep(5)
+% sleep 5
 ```
 
 ### 2.6 注释

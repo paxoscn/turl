@@ -49,7 +49,11 @@ def runCase(indexPath, namePath, lines):
     lastCurl = None
     lastRes = None
     for line in lines:
-        if line.startswith("curl "):
+        if line.startswith("%"):
+            cmd = line[1:].strip()
+            print "[DEBUG] Executing shell: " + cmd
+            os.system(cmd)
+        elif line.startswith("curl "):
             line = line.replace("curl ", "curl -s ")
             line = re.sub(' +', ' ', line)
             if domain is not None:
@@ -83,6 +87,7 @@ def nextRandom():
     return lastRandom
 
 def validateRes(indexPath, namePath, curl, expJson, actJson):
+    print "!!!" + expJson
     if actJson is None:
         sys.stderr.write(indexPath[2:-1] + "\t" + namePath[1:-1] + "\t" + curl + "\t(Empty)\t" + expJson + "\tBad response\n")
         failed = True
@@ -136,7 +141,9 @@ def validateObj(objPath, exp, act):
                 errors += objPath + "." + k + "'s value " + str(actV) + " is not list; "
             else:
                 for i, item in enumerate(actV):
-                    errors += validateObj(objPath + "." + k + "[" + str(i) + "]", expV[0], item)
+                    # FIXME Only validates dicts in array now.
+                    if type(expV[0]) == dict:
+                        errors += validateObj(objPath + "." + k + "[" + str(i) + "]", expV[0], item)
         else:
             if type(actV) != dict:
                 errors += objPath + "." + k + "'s value " + str(actV) + " is not dict; "
@@ -154,13 +161,13 @@ def build():
         if len(line) < 1 or line.startswith("#"):
             continue
         if state == "IN_MODULE":
-            if line.startswith("curl "):
+            if line.startswith("curl ") or line.startswith("%"):
                 currentModule["lines"].append(line)
                 state = "IN_CASE"
             else:
                 currentModule = metNewModule(rootModule, line)
         elif state == "IN_CASE":
-            if line.startswith("curl ") or line.startswith("{"):
+            if line.startswith("curl ") or line.startswith("{") or line.startswith("%"):
                 currentModule["lines"].append(line)
             else:
                 currentModule = metNewModule(rootModule, line)
