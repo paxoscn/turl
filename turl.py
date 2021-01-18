@@ -151,7 +151,7 @@ def build():
     currentModule = rootModule = { "highlighted": True, "name": "", "children": [], "lines": [] }
     for line in turlML.split("\n"):
         line = line.strip()
-        if len(line) < 1:
+        if len(line) < 1 or line.startswith("#"):
             continue
         if state == "IN_MODULE":
             if line.startswith("curl "):
